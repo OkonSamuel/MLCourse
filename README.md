@@ -8,11 +8,10 @@ or newer, open julia and install the code in this repository with
 ```julia
 julia> using Pkg
        Pkg.activate(temp = true)
-       Pkg.develop(url = "https://github.com/jbrea/MLCourse")
+       Pkg.develop(url = "https://github.com/OkonSamuel/MLCourse")
        Pkg.activate(joinpath(Pkg.devdir(), "MLCourse"))
        Pkg.instantiate()
        using MLCourse
-       MLCourse.create_sysimage()
 ```
 
 To use the notebooks, restart julia and type
