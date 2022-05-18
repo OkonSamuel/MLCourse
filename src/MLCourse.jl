@@ -17,6 +17,26 @@ function start()
 Please use `$(nameof(@__MODULE__)).stop()` to interrupt the Pluto notebook server.")
 end
 
+function update()
+    project_path = pkgdir(@__MODULE__)
+    @info "Performing an automatic update while keeping local changes.
+    If this fails, please run manually `git pull` in the directory
+    `$(project_path)`."
+    current_dir = pwd()
+    cd(project_path)
+    if !isempty(readlines(`$(git()) diff --stat`))
+        run(`$(git()) add -u`)
+    end
+    if !isempty(readlines(`$(git()) diff --cached`))
+        run(`$(git()) -c user.name="student" -c user.email="student@mlcourse" commit -m "automatic commit of local changes"`)
+    end
+    run(`$(git()) pull -s recursive -X patience -X ours -X ignore-all-space --no-edit`)
+    if !isempty(read(`$(git()) diff HEAD^ --name-only Manifest.toml`, String))
+        Pkg.instantiate()
+    end
+    cd(current_dir)
+end
+
 function __init__()
 #=
 PrecompilePlutoCourse.configure(@__MODULE__,
