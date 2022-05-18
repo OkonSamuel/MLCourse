@@ -57,6 +57,7 @@ TSne = "24678dba-d5e9-5843-a4c6-250288b04835"
 Tar = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
 TextAnalysis = "a2db99b7-8b79-58f8-94bf-bbc811eef33d"
 Zygote = "e88e6eb3-aa80-5325-afca-941959d7151f"
+Git = "d7ba0133-e1db-5d97-8f8c-041e4b3a1eb2"
 
 [compat]
 CSV = "0.9"
@@ -86,6 +87,7 @@ StatsBase = "0.33"
 StatsPlots = "0.14"
 TextAnalysis = "0.7"
 Zygote = "0.6"
+Git = "1.2"
 julia = "1.7.1"
 
 [extras]
