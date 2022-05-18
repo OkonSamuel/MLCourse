@@ -1,12 +1,24 @@
 module MLCourse
 
 import Pkg
-using Requires, PrecompilePlutoCourse
+using Requires
 using Markdown, Base64
 
 include("notebooks.jl")
 
+function start()
+    exeflags = ["--project=$(pkgdir(@__MODULE__))"]
+    pid = Distributed.addprocs(1, exeflags = exeflags) |> first
+    expr = :(using Pluto; Pluto.run(notebook = $(pkgdir(@__MODULE__, "index.jl")),
+                                    workspace_use_distributed = false,
+                                    dismiss_update_notification = true))
+    @async Distributed.remotecall_eval(Main, [pid], expr)
+    println("Starting a Pluto notebook in your browswer.
+Please use `$(nameof(@__MODULE__)).stop()` to interrupt the Pluto notebook server.")
+end
+
 function __init__()
+#=
 PrecompilePlutoCourse.configure(@__MODULE__,
     start_notebook = pkgdir(@__MODULE__, "index.jl"),
     sysimage_path = pkgdir(@__MODULE__, "precompile", "mlcourse.so"),
@@ -14,6 +26,7 @@ PrecompilePlutoCourse.configure(@__MODULE__,
     packages = [:Pluto, :MLJ, :MLJLinearModels, :Distributions,
                 :MLCourse, :StatsPlots, :DataFrames, :MLJFlux]
 )
+=#
 
 @require Zygote="e88e6eb3-aa80-5325-afca-941959d7151f" begin
 using Zygote
