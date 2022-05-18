@@ -1,7 +1,7 @@
 module MLCourse
 
 import Pkg
-using Requires, Distributed
+using Requires, Distributed, Git
 using Markdown, Base64
 
 include("notebooks.jl")
