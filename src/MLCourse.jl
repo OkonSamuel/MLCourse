@@ -14,8 +14,10 @@ function start()
                                     dismiss_update_notification = true))
     @async Distributed.remotecall_eval(Main, [pid], expr)
     println("Starting a Pluto notebook in your browswer.
-Please use `$(nameof(@__MODULE__)).stop()` to interrupt the Pluto notebook server.")
+    Please use `$(nameof(@__MODULE__)).stop()` to interrupt the Pluto notebook server.")
 end
+
+stop() = Distributed.interrupt()
 
 function update()
     project_path = pkgdir(@__MODULE__)
